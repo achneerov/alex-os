@@ -22,8 +22,10 @@ static void serial_write(const char *text) {
     }
 }
 
-// Our bootloader enters here in 64-bit mode with a stack already set up.
-__attribute__((section(".text.entry")))
+__attribute__((section(".text.entry"), noreturn))
 void kmain(void) {
     serial_write("Welcome to alex os\r\n");
+    for (;;) {
+        __asm__ volatile ("hlt");
+    }
 }
